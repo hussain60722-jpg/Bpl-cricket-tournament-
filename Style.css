@@ -1,0 +1,110 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #101827;
+  color: white;
+}
+
+header {
+  background: #075e42;
+  text-align: center;
+  padding: 22px 10px;
+}
+
+header h1 {
+  font-size: 24px;
+}
+
+#connection {
+  color: #bbf7d0;
+  font-size: 13px;
+}
+
+main {
+  max-width: 700px;
+  margin: auto;
+  padding: 15px;
+}
+
+.card {
+  background: #243247;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 14px;
+}
+
+input, select {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin: 12px 0;
+  border: 0;
+  border-radius: 7px;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px;
+  margin: 5px 2px;
+  background: #16a34a;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+}
+
+#bidBtn {
+  background: #e59b14;
+  color: #111;
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+}
+
+#bidAmount {
+  color: #4ade80;
+  font-size: 36px;
+}
+
+#soldBtn {
+  background: #15803d;
+}
+
+#unsoldBtn {
+  background: #dc2626;
+}
+
+#nextBtn {
+  background: #2563eb;
+}
+
+.team-card {
+  background: #243247;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+small {
+  color: #cbd5e1;
+}
+
+[hidden] {
+  display: none !important;
+}

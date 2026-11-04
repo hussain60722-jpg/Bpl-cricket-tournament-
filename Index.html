@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boundary Cricket Auction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>🏏 BOUNDARY AUCTION</h1>
+  <p>Cricket Player Auction Management</p>
+  <span id="connection">Connecting...</span>
+</header>
+
+<main>
+  <section id="login">
+    <h2>Management Login</h2>
+    <input id="email" type="email" placeholder="Management email">
+    <input id="password" type="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <p id="message"></p>
+  </section>
+
+  <section id="dashboard" hidden>
+    <div class="top">
+      <h2>Live Auction</h2>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="card">
+      <h3 id="playerName">No player selected</h3>
+      <p id="playerRole">Player role</p>
+      <p>Base Price: <b id="basePrice">₹0</b></p>
+      <h1 id="bidAmount">₹0</h1>
+      <p>Highest bidder: <b id="highestTeam">None</b></p>
+      <p>Status: <b id="status">Waiting</b></p>
+
+      <select id="teamSelect">
+        <option value="team1">Team 1</option>
+        <option value="team2">Team 2</option>
+        <option value="team3">Team 3</option>
+        <option value="team4">Team 4</option>
+      </select>
+
+      <button id="bidBtn">PLACE BID</button>
+      <button id="soldBtn">SOLD</button>
+      <button id="unsoldBtn">UNSOLD</button>
+      <button id="nextBtn">NEXT PLAYER</button>
+    </div>
+
+    <div class="card">
+      <h3>Add New Player</h3>
+      <input id="newName" placeholder="Player name">
+      <input id="newRole" placeholder="Player role">
+      <input id="newPrice" type="number" placeholder="Base price">
+      <button id="addPlayerBtn">ADD PLAYER</button>
+    </div>
+
+    <h2>Four Teams</h2>
+    <div id="teams"></div>
+
+    <h2>Player List</h2>
+    <div id="players"></div>
+  </section>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
