@@ -38,19 +38,12 @@ let unsubscribe = null;
 
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN");
 
-function initialData() {
-  return {
-    teams: {
-      team1: { name: "Team 1", purse: 10000000 },
-      team2: { name: "Team 2", purse: 10000000 },
-      team3: { name: "Team 3", purse: 10000000 },
-      team4: { name: "Team 4", purse: 10000000 }
-    },
-    players: {},
-    current: null,
-    history: {}
-  };
-}
+teams: {
+  team1: { name: "Team 1", purse: 200000 },
+  team2: { name: "Team 2", purse: 200000 },
+  team3: { name: "Team 3", purse: 200000 },
+  team4: { name: "Team 4", purse: 200000 }
+},
 
 function showMessage(msg) {
   const el = document.getElementById("message");
