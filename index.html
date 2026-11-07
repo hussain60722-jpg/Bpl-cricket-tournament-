@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,76 +11,199 @@
 <body>
 
 <header>
-  <h1>🏏 BOUNDARY AUCTION</h1>
-  <p>Cricket Player Auction Management</p>
+  <div>
+    <h1>🏏 BOUNDARY AUCTION</h1>
+    <p>Cricket Player Auction Management</p>
+  </div>
   <span id="connection">Connecting...</span>
 </header>
 
 <main>
-  <section id="login">
-    <h2>Management Login</h2>
-    <input id="email" type="email" placeholder="Management email">
-    <input id="password" type="password" placeholder="Password">
+
+  <!-- LOGIN -->
+  <section id="login" class="panel narrow">
+    <h2>Sign in</h2>
+    <p>Management and team members use their own Firebase login.</p>
+
+    <label>Email
+      <input id="email" type="email" autocomplete="username"
+        placeholder="Email address">
+    </label>
+
+    <label>Password
+      <input id="password" type="password"
+        autocomplete="current-password" placeholder="Password">
+    </label>
+
     <button id="loginBtn">Login</button>
-    <p id="message"></p>
+    <p id="message" class="message"></p>
   </section>
 
-  <section id="dashboard" hidden>
-    <div class="top">
-      <h2>Live Auction</h2>
-      <button id="logoutBtn">Logout</button>
+  <!-- MAIN DASHBOARD -->
+  <section id="app" hidden>
+
+    <div class="toolbar">
+      <div>
+        <h2 id="welcome">Auction dashboard</h2>
+        <span id="roleLabel" class="muted"></span>
+      </div>
+      <button id="logoutBtn" class="secondary">Logout</button>
     </div>
 
-    <div class="card">
-      <h3 id="playerName">No player selected</h3>
-      <p id="playerRole">Player role</p>
-      <p>Base Price: <b id="basePrice">₹0</b></p>
-      <h1 id="bidAmount">₹0</h1>
-      <p>Highest bidder: <b id="highestTeam">None</b></p>
-      <p>Status: <b id="status">Waiting</b></p>
+    <!-- LIVE AUCTION -->
+    <section id="auctionPanel" class="panel">
+      <h2>Live auction</h2>
 
-      <select id="teamSelect">
-        <option value="team1">Team 1</option>
-        <option value="team2">Team 2</option>
-        <option value="team3">Team 3</option>
-        <option value="team4">Team 4</option>
-      </select>
+      <div class="auction-grid">
+        <div>
+          <p class="muted">Current player</p>
+          <h2 id="playerName">No player selected</h2>
+          <p id="playerRole"></p>
+          <p>Base price: <b id="basePrice">₹0</b></p>
 
-      <button id="bidBtn">PLACE BID</button>
-      <button id="soldBtn">SOLD</button>
-      <button id="unsoldBtn">UNSOLD</button>
-      <button id="nextBtn">NEXT PLAYER</button>
-    </div>
+          <div class="big-price" id="bidAmount">₹0</div>
 
-    <div class="card">
-      <h3>Add New Player</h3>
-      <input id="newName" placeholder="Player name">
-      <input id="newRole" placeholder="Player role">
-      <input id="newPrice" type="number" placeholder="Base price">
-      <button id="addPlayerBtn">ADD PLAYER</button>
-    </div>
+          <p>Highest bidder:
+            <b id="highestTeam">None</b>
+          </p>
 
-    <h2>Four Teams</h2>
-    <div id="teams"></div>
+          <p>Status: <b id="status">Waiting</b></p>
+        </div>
 
-    <h2>Player List</h2>
-    <div id="players"></div>
+        <div class="bid-box">
+
+          <label id="teamPickerWrap">Select team
+            <select id="teamSelect">
+              <option value="team1">Team 1</option>
+              <option value="team2">Team 2</option>
+              <option value="team3">Team 3</option>
+              <option value="team4">Team 4</option>
+            </select>
+          </label>
+
+          <label>Manual bid amount (₹)
+            <input id="manualBid" type="number"
+              min="1" step="1" placeholder="Enter bid">
+          </label>
+
+          <p id="bidHint" class="muted"></p>
+
+          <button id="bidBtn">Place bid</button>
+
+          <div id="adminAuctionButtons" class="button-row">
+            <button id="soldBtn" class="success">SOLD</button>
+            <button id="unsoldBtn" class="danger">UNSOLD</button>
+            <button id="nextBtn" class="secondary">Next player</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM BUDGETS -->
+    <section id="teamSummary" class="panel">
+      <h2>Team budgets and spending</h2>
+      <div id="teams" class="team-grid"></div>
+    </section>
+
+    <!-- TEAM PURCHASES -->
+    <section id="teamPurchasesPanel" class="panel" hidden>
+      <h2>My purchased players</h2>
+      <div id="myPurchases"></div>
+    </section>
+
+    <!-- ADMIN SETTINGS -->
+    <section id="adminSettings" class="panel" hidden>
+      <h2>Auction settings</h2>
+
+      <label>Minimum bid increment (₹)
+        <input id="minIncrement" type="number"
+          min="1" step="1">
+      </label>
+
+      <button id="saveSettingsBtn">
+        Save minimum increment
+      </button>
+
+      <p class="muted">
+        The first bid must be at least the player's base price.
+        Later bids must be at least the current bid plus this increment.
+      </p>
+    </section>
+
+    <!-- ADD OR EDIT PLAYER -->
+    <section id="addPlayerPanel" class="panel" hidden>
+      <h2 id="playerFormTitle">Add player</h2>
+
+      <div class="form-grid">
+
+        <label>Player name
+          <input id="newName" placeholder="Player name">
+        </label>
+
+        <label>Role
+          <input id="newRole"
+            placeholder="Batter / Bowler / All-rounder / WK">
+        </label>
+
+        <label>Base price (₹)
+          <input id="newPrice" type="number"
+            min="1" step="1" placeholder="Base price">
+        </label>
+
+      </div>
+
+      <div class="button-row">
+        <button id="addPlayerBtn">Add player</button>
+        <button id="cancelEditBtn" class="secondary" hidden>
+          Cancel edit
+        </button>
+      </div>
+    </section>
+
+    <!-- PLAYER LIST AND SEARCH -->
+    <section class="panel">
+
+      <div class="toolbar wrap">
+        <h2>Player list</h2>
+
+        <div class="filters">
+          <input id="playerSearch"
+            placeholder="Search player name or role">
+
+          <select id="statusFilter">
+            <option value="ALL">All statuses</option>
+            <option value="UNSOLD">Available / unsold</option>
+            <option value="LIVE">Live</option>
+            <option value="SOLD">Sold</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="players" class="table-wrap"></div>
+
+    </section>
+
+    <!-- AUCTION HISTORY -->
+    <section class="panel">
+
+      <div class="toolbar wrap">
+        <h2>Complete auction history</h2>
+
+        <button id="exportBtn" class="secondary">
+          Export results CSV
+        </button>
+      </div>
+
+      <div id="history" class="table-wrap"></div>
+
+    </section>
+
   </section>
+
 </main>
-  <select id="teamSelect">
-  <option value="team1">Team 1</option>
-  <option value="team2">Team 2</option>
-  <option value="team3">Team 3</option>
-  <option value="team4">Team 4</option>
-  </select>
-  <input
-  type="number"
-  id="manualBid"
-  placeholder="Enter bid amount (₹)"
-  min="1"
-  step="1"
->
 
 <script type="module" src="app.js"></script>
+
 </body>
 </html>
