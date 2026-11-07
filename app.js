@@ -214,11 +214,21 @@ onAuthStateChanged(auth, async user => {
 });
 
 // PLACE BID
+
+// PLACE BID - MANUAL BIDDING
 document.getElementById("bidBtn")?.addEventListener("click", async () => {
+
   const teamId = document.getElementById("teamSelect").value;
+  const amount = Number(document.getElementById("manualBid").value);
+
+  if (!Number.isSafeInteger(amount) || amount <= 0) {
+    alert("Enter a valid bid amount.");
+    return;
+  }
 
   try {
     const result = await runTransaction(auctionRef, data => {
+
       if (!data || !data.current ||
           data.current.status !== "LIVE") return;
 
@@ -227,24 +237,34 @@ document.getElementById("bidBtn")?.addEventListener("click", async () => {
 
       if (!team || p.highestTeam === teamId) return;
 
-      const nextBid = p.highestTeam
-        ? p.bid + 25000
-        : p.basePrice;
+      // First bid must meet base price
+      if (!p.highestTeam && amount < p.basePrice) return;
 
-      if (team.purse < nextBid) return;
+      // Later bids must be higher than current bid
+      if (p.highestTeam && amount <= p.bid) return;
 
-      p.bid = nextBid;
+      // Check team budget
+      if (team.purse < amount) return;
+
+      p.bid = amount;
       p.highestTeam = teamId;
       p.bidTime = Date.now();
 
       return data;
     });
 
-    if (!result.committed) alert("Bid not accepted. Check team budget or auction status.");
+    if (result.committed) {
+      document.getElementById("manualBid").value = "";
+      alert("Bid placed successfully!");
+    } else {
+      alert("Bid rejected! Check the amount, team budget or auction status.");
+    }
+
   } catch (e) {
     alert("Bidding error: " + e.message);
   }
 });
+    
 
 // ADD PLAYER
 document.getElementById("addPlayerBtn")?.addEventListener("click", async () => {
